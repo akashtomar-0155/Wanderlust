@@ -1,0 +1,175 @@
+<% layout("/layouts/boilerplate") %>
+        <style>
+            #filters {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0 clamp(1rem, 3vw, 2rem);
+            }
+
+            .filter {
+                text-align: center;
+                margin-top: 1rem;
+                opacity: 0.7;
+            }
+
+            .filter a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .active {
+                opacity: 1;
+                border-bottom: 2px solid black;
+            }
+
+            .filter:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+
+            .filter p {
+                font-size: 0.8rem;
+            }
+
+            .tax-info {
+                display: none;
+            }
+
+            .tax-toggle {
+                border: 1px solid black;
+                border-radius: 1rem;
+                height: 3.25rem;
+                padding: 1rem;
+                display: flex;
+                align-items: center;
+            }
+
+        </style>
+
+        <div id="filters">
+            <div class="filter <%= selectedCategory === "Trending" ? "active" : "" %>">
+                <a href="/listings?filterListings=Trending">
+                    <div><i class="fa-solid fa-fire"></i></div>
+                    <p>Trending</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Rooms" ? "active" : "" %>">
+                <a href="/listings?filterListings=Rooms">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <p>Rooms</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Iconic cities" ? "active" : "" %>">
+                <a href="/listings?filterListings=Iconic cities">
+                    <div><i class="fa-solid fa-mountain-city"></i></div>
+                    <p>Iconic cities</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Mountains" ? "active" : "" %>">
+                <a href="/listings?filterListings=Mountains">
+                    <div><i class="fa-solid fa-mountain"></i></div>
+                    <p>Mountains</p>              
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Castles" ? "active" : "" %>">
+                <a href="/listings?filterListings=Castles">
+                    <div><i class="fa-brands fa-fort-awesome"></i></div>
+                    <p>Castles</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Amazing Pools" ? "active" : "" %>">
+                <a href="/listings?filterListings=Amazing Pools">
+                    <div><i class="fa-solid fa-person-swimming"></i></div>
+                    <p>Amazing Pools</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Camping" ? "active" : "" %>">
+                <a href="/listings?filterListings=Camping">
+                    <div><i class="fa-solid fa-campground"></i></div>
+                    <p>Camping</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Farms" ? "active" : "" %>">
+                <a href="/listings?filterListings=Farms">
+                    <div><i class="fa-solid fa-cow"></i></div>
+                    <p>Farms</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Arctic" ? "active" : "" %>">
+                <a href="/listings?filterListings=Arctic">
+                    <div><i class="fa-solid fa-snowflake"></i></div>
+                    <p>Arctic</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Beach" ? "active" : "" %>">
+                <a href="/listings?filterListings=Beach">
+                    <div><i class="fa-solid fa-umbrella-beach"></i></div>
+                    <p>Beach</p>
+                </a>
+            </div>
+
+            <div class="filter <%= selectedCategory === "Historic" ? "active" : "" %>">
+                <a href="/listings?filterListings=Historic">
+                    <div><i class="fa-solid fa-landmark"></i></div>
+                    <p>Historic</p>
+                </a>
+            </div>
+
+
+            <div class="tax-toggle">
+                <div class="form-check-reverse form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                    <label class="form-check-label" for="switchCheckDefault">Display total after Taxes</label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+            <% for (let listing of allListings) { %>
+
+                <a href="/listings/<%= listing._id %>" class="listing-link">
+                    <div class="card col listing-card">
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+
+                        <div class="card-img-overlay"></div>
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b><%= listing.title %></b>
+                                <br>
+                                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                                <i class="tax-info">&nbsp; &nbsp; +18% GST</i>
+                            </p>
+                        </div>
+
+                    </div>
+                </a>
+            <% } %>
+        </div>
+
+        <script>
+            let taxSwitch = document.getElementById("switchCheckDefault");
+            taxSwitch.addEventListener("click", () => {
+                let taxInfo = document.getElementsByClassName("tax-info");
+                // console.log(taxInfo);
+                for (info of taxInfo) {
+                    if (info.style.display != "inline") {
+                        info.style.display = "inline";
+                    } else {
+                        info.style.display = "none";
+                    }
+                }
+            })
+        </script>
+
