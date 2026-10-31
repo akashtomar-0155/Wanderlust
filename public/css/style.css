@@ -21,6 +21,12 @@ body {
     font-size: 2rem;
 }
 
+.brand-name {
+    color: #fe424d;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
 .nav-link {
     color: #222222 !important;
 }
@@ -143,7 +149,16 @@ body {
 
 /* Maps */
 
-#map { 
+#map {
     height: 400px;
     width: 80vh;
+    max-width: 100%;
+    border-radius: 1rem;
+}
+
+/* Maps :-  Mobile view */
+@media (max-width: 767px) {
+    #map {
+        width: 100%;
+    }
 }

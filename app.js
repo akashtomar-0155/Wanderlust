@@ -95,6 +95,16 @@ app.use((req, res, next) => {
 });
 
 
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
+
+// Handle Chrome DevTools automatic .well-known requests to prevent unnecessary 404 errors
+app.use("/.well-known", (req, res) => {
+    res.sendStatus(204);
+});
+
 
 // Listing Router
 app.use("/listings", listingRouter);
@@ -118,6 +128,7 @@ app.get("/terms", (req, res) => {
 app.all("/{*splat}", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
 });
+
 
 app.use((err, req, res, next) => {
     let {statusCode = 500, message = "Something went wrong!"} = err;
